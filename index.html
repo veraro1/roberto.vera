@@ -15,7 +15,10 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-    
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -29,6 +32,27 @@
 
 </head>
 <body>
+  <!-- Chatbot -->
+  <div class="chatbot-container">
+    <button class="chatbot-btn" id="chatbotBtn">
+      <i class="fas fa-robot"></i>
+    </button>
+    <div class="chatbot-window" id="chatbotWindow">
+      <div class="chatbot-header">
+        <i class="fas fa-robot"></i>
+        <h3>Asistente de AlfaIAIDigital</h3>
+      </div>
+      <div class="chatbot-messages" id="chatbotMessages">
+        <div class="message bot">
+          ¡Hola! Soy el asistente virtual de AlfaIAIDigital. ¿En qué puedo ayudarte hoy?
+        </div>
+      </div>
+      <div class="chatbot-input">
+        <input type="text" id="userInput" placeholder="Escribe tu mensaje...">
+        <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
 
   <!-- ======= Mobile nav toggle button ======= -->
   <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
@@ -67,7 +91,7 @@
   <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
     <div class="hero-container" data-aos="fade-in">
       <h1>Roberto Ismael Vera Popoca</h1>
-      <p>Doctor <span class="typed" data-typed-items="en Ciencias de la Computación, Docente Tecnológico de Monterrey, Docente FCA de la UAEMex"></span></p>
+      <p> <span class="typed" data-typed-items="Doctor en Ciencias de la Computación, Docente Tecnológico de Monterrey, Docente FCA de la UAEMex"></span></p>
       <h1>Tecnológico de Monterrey </h1>
       <h1>(UAEMex) Universidad Autónoma del </h1><h1>Estado de México </h1>
     </div>
@@ -462,6 +486,7 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+  <script src="assets/js/script.js"></script>
   <!-- Vendor JS Files -->
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
@@ -475,7 +500,115 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const chatbotBtn = document.getElementById('chatbotBtn');
+      const chatbotWindow = document.getElementById('chatbotWindow');
+      const sendMessageBtn = document.getElementById('sendMessage');
+      const userInput = document.getElementById('userInput');
+      const chatbotMessages = document.getElementById('chatbotMessages');
+      
+      // Alternar visibilidad del chatbot
+      chatbotBtn.addEventListener('click', function() {
+        chatbotWindow.classList.toggle('active');
+      });
+      
+      // Función para agregar un mensaje al chat
+      function addMessage(message, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+        if (isUser) {
+          messageDiv.classList.add('user');
+        } else {
+          messageDiv.classList.add('bot');
+        }
+        messageDiv.textContent = message;
+        chatbotMessages.appendChild(messageDiv);
+        
+        // Desplazar hacia el último mensaje
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      }
+      
+      // Función para mostrar el indicador de "escribiendo"
+      function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.classList.add('typing-indicator');
+        typingDiv.innerHTML = `
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+        `;
+        chatbotMessages.appendChild(typingDiv);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        return typingDiv;
+      }
+      
+      // Función para obtener una respuesta del bot
+      function getBotResponse(userMessage) {
+        userMessage = userMessage.toLowerCase();
+        
+        // Respuestas predefinidas
+        const responses = {
+          'hola': '¡Hola! ¿En qué puedo ayudarte?',
+          'adiós': '¡Hasta luego! Que tengas un buen día.',
+          'gracias': '¡De nada! ¿Hay algo más en lo que pueda ayudarte?',
+          'investigación': 'Mis áreas de investigación incluyen inteligencia artificial, aprendizaje automático, procesamiento del lenguaje natural y visión artificial.',
+          'publicaciones': 'Puedes encontrar mis publicaciones en la sección "Publicación" de mi sitio web.',
+          'docencia': 'Actualmente soy docente en el Tecnológico de Monterrey y en la Universidad Autónoma del Estado de México.',
+          'contacto': 'Puedes contactarme a través de veraro@hotmail.com o riverap@uaemex.mx. También puedes llamarme al 722 245 07 05.',
+          'proyectos': 'He trabajado en diversos proyectos de desarrollo web, sistemas de información y aplicaciones basadas en IA.',
+          'experiencia': 'Tengo experiencia como Jefe de Departamento, Coordinador de Informática y Profesor Universitario.',
+          'formación': 'Soy Doctor en Ciencias de la Computación por la Universidad Autónoma del Estado de México, con maestrías en Informática y Tecnologías de la Información.',
+          'habilidades': 'Mis habilidades incluyen PHP, Python, bases de datos (MySQL, MongoDB, PostgreSQL), diseño UX/UI y desarrollo de aplicaciones web progresivas.'
+        };
+        
+        // Buscar una respuesta coincidente
+        for (const keyword in responses) {
+          if (userMessage.includes(keyword)) {
+            return responses[keyword];
+          }
+        }
+        
+        // Respuesta por defecto
+        return 'Gracias por tu mensaje. Soy un asistente virtual y estoy aquí para ayudarte. ¿En qué más puedo ayudarte?';
+      }
+      
+      // Manejar el envío de mensajes
+      function handleSendMessage() {
+        const message = userInput.value.trim();
+        if (message) {
+          // Agregar mensaje del usuario
+          addMessage(message, true);
+          userInput.value = '';
+          
+          // Mostrar indicador de "escribiendo"
+          const typingIndicator = showTypingIndicator();
+          
+          // Simular tiempo de respuesta del bot
+          setTimeout(() => {
+            // Eliminar indicador de "escribiendo"
+            typingIndicator.remove();
+            
+            // Obtener respuesta del bot
+            const botResponse = getBotResponse(message);
+            
+            // Agregar respuesta del bot
+            addMessage(botResponse);
+          }, 1500);
+        }
+      }
+      
+      // Enviar mensaje al hacer clic en el botón
+      sendMessageBtn.addEventListener('click', handleSendMessage);
+      
+      // Enviar mensaje al presionar Enter
+      userInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          handleSendMessage();
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
