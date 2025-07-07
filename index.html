@@ -29,31 +29,46 @@
     
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
+<script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  createChat({
+  	webhookUrl: 'https://work.infinitewebai.space/webhook/ba717f05-9998-41e3-9c1f-b4c309623a3c/chat',
+    webhookConfig: {
+      method: 'POST',
+      headers: {}
+    },
+    target: '#n8n-chat',
+    mode: 'window',
+    chatInputKey: 'chatInput',
+    chatSessionKey: 'sessionId',
+    loadPreviousSession: true,
+    metadata: {},
+    showWelcomeScreen: false,
+    defaultLanguage: 'en',
+    initialMessages: [
+      'Hola!',
+      'Soy el asistende del', 
+      'Doctor Roberto Ismael Vera Popoca,',
+      'Mi nombre es Bob.',
+      '¿En qué puedo ayudarte hoy?'
+    ],
+    i18n: {
+      en: {
+        title: 'Hola ....! 👋',
+        subtitle: "Inicia un chat. Estamos aquí para ayudarte 24/7...",
+        footer: '',
+        getStarted: 'Nueva Conversación',
+        inputPlaceholder: 'Cuál es tu pregunta ....',
+      },
+    },
+  });
+</script>
 
 </head>
 <body>
-  <!-- Chatbot -->
-  <div class="chatbot-container">
-    <button class="chatbot-btn" id="chatbotBtn">
-      <i class="fas fa-robot"></i>
-    </button>
-    <div class="chatbot-window" id="chatbotWindow">
-      <div class="chatbot-header">
-        <i class="fas fa-robot"></i>
-        <h3>Asistente de AlfaIAIDigital</h3>
-      </div>
-      <div class="chatbot-messages" id="chatbotMessages">
-        <div class="message bot">
-          ¡Hola! Soy el asistente virtual de AlfaIAIDigital. ¿En qué puedo ayudarte hoy?
-        </div>
-      </div>
-      <div class="chatbot-input">
-        <input type="text" id="userInput" placeholder="Escribe tu mensaje...">
-        <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
-      </div>
-    </div>
-  </div>
-
   <!-- ======= Mobile nav toggle button ======= -->
   <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
 
