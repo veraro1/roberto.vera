@@ -30,43 +30,7 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-
-<script type="module">
-	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
-  createChat({
-  	webhookUrl: 'https://work.infinitewebai.space/webhook/ba717f05-9998-41e3-9c1f-b4c309623a3c/chat',
-    webhookConfig: {
-      method: 'POST',
-      headers: {}
-    },
-    target: '#n8n-chat',
-    mode: 'window',
-    chatInputKey: 'chatInput',
-    chatSessionKey: 'sessionId',
-    loadPreviousSession: true,
-    metadata: {},
-    showWelcomeScreen: false,
-    defaultLanguage: 'en',
-    initialMessages: [
-      'Hola!',
-      'Soy el asistende del', 
-      'Doctor Roberto Ismael Vera Popoca,',
-      'Mi nombre es Bob.',
-      '¿En qué puedo ayudarte hoy?'
-    ],
-    i18n: {
-      en: {
-        title: 'Hola ....! 👋',
-        subtitle: "Inicia un chat. Estamos aquí para ayudarte 24/7...",
-        footer: '',
-        getStarted: 'Nueva Conversación',
-        inputPlaceholder: 'Cuál es tu pregunta ....',
-      },
-    },
-  });
-</script>
-
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- ======= Mobile nav toggle button ======= -->
@@ -482,7 +446,59 @@
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
+<!--******************************************************************-->
+    <!-- Panel de depuración -->
+    <div class="debug-panel">
+        <div class="debug-header">
+            <div class="debug-toggle" id="debugToggle"></div>
+        </div>
+        <div class="debug-content" id="debugContent">
+            <div class="debug-item">
+                <div class="debug-data" id="debugStatus"></div>
+            </div>
+            <div class="debug-item">
+                <div class="debug-data" id="debugRawResponse"></div>
+            </div>
+            <div class="debug-item">
+                <div class="debug-data" id="debugProcessedResponse"></div>
+            </div>
+        </div>
+    </div>
 
+     <!-- Widget de chat -->
+    <div class="chat-widget">
+        <button class="chat-toggle" id="chatToggle">
+            <span id="chatIcon">💬</span>
+        </button>
+
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h3>Asistente Virtual</h3>
+                <h3><div class="logo-text1">del Doctor</div></h3>
+                <h3><div class="logo-text1">Roberto Ismael Vera Popoca</div></h3>
+                <p>Estoy listo para ayudarte</p>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    ¡Hola! ¿En qué puedo ayudarte hoy?
+                </div>
+            </div>
+
+            <div class="chat-input">
+                <input 
+                    type="text" 
+                    id="messageInput" 
+                    placeholder="Escribe tu mensaje..."
+                    autocomplete="off"
+                >
+                <button class="send-button" id="sendButton">
+                    ➤
+                </button>
+            </div>
+        </div>
+    </div>
+<!--******************************************************************-->
   <!-- ======= Footer ======= -->
   <footer id="footer">
     <div class="container">
@@ -515,6 +531,7 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="scripts.js"></script>
  <script>
     document.addEventListener('DOMContentLoaded', function() {
       const chatbotBtn = document.getElementById('chatbotBtn');
